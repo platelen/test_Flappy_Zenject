@@ -1,39 +1,42 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+namespace Player
 {
-    [SerializeField] private float _gravity = -10f;
-    [SerializeField] private float _strengthSpace = 5f;
-
-    private Vector3 _directaion;
-
-    private void Update()
+    public class PlayerController : MonoBehaviour
     {
-        InputControllerPC();
-        InputControllerMobile();
+        [SerializeField] private float _gravity = -10f;
+        [SerializeField] private float _strengthSpace = 5f;
 
-        _directaion.y += _gravity * Time.deltaTime;
-        transform.position += _directaion * Time.deltaTime;
-    }
+        private Vector3 _directaion;
 
-    private void InputControllerPC()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) || (Input.GetMouseButtonDown(0)))
+        private void Update()
         {
-            _directaion = Vector3.up * _strengthSpace;
+            InputControllerPC();
+            InputControllerMobile();
+
+            _directaion.y += _gravity * Time.deltaTime;
+            transform.position += _directaion * Time.deltaTime;
         }
-    }
 
-    private void InputControllerMobile()
-    {
-        // Проверяем наличие нажатия на экран
-        if (Input.touchCount > 0)
+        private void InputControllerPC()
         {
-            Touch touch = Input.GetTouch(0);
-
-            if (touch.phase == TouchPhase.Began)
+            if (Input.GetKeyDown(KeyCode.Space) || (Input.GetMouseButtonDown(0)))
             {
                 _directaion = Vector3.up * _strengthSpace;
+            }
+        }
+
+        private void InputControllerMobile()
+        {
+            // Проверяем наличие нажатия на экран
+            if (Input.touchCount > 0)
+            {
+                Touch touch = Input.GetTouch(0);
+
+                if (touch.phase == TouchPhase.Began)
+                {
+                    _directaion = Vector3.up * _strengthSpace;
+                }
             }
         }
     }
